@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: caos
-# Recipe:: ok
+# Cookbook Name:: ok
+# Recipe:: default
 #
 # Copyright 2012, Courtney Wilburn
 #
@@ -16,14 +16,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
 
-#Checkout OK Framework
+#install unzip if needed
 
-git "#{node['cf902']['webroot']}/ok" do                            
-  repository "#{node['caos']['ok']['git']['repository']}"
-  revision "#{node['caos']['ok']['git']['revision']}"                                  
-  action :sync                                     
-  ssh_wrapper "#{Chef::Config['file_cache_path']}/wrap-ssh4git.sh"      	               
+package "unzip" do
+  action :install
+end
+
+# download ok
+
+remote_file "#{Chef::Config['file_cache_path']}/ok-0.1.zip" do
+  source "#{node['ok']['download']['url']}"
+  action :create_if_missing
+  mode "0744"
+  owner "root"
+  group "root"
+  not_if { File.directory?("#{node['ok']['install_path']}/ok") }
+end
+
+
+# Extract archive
+
+script "install_ok" do
+  interpreter "bash"
+  user "root"
+  cwd "#{Chef::Config['file_cache_path']}"
+  code <<-EOH
+unzip ok-0.1.zip 
+mv ok #{node['ok']['install_path']}
+chown -R nobody:bin #{node['ok']['install_path']}/ok
+EOH
+  not_if { File.directory?("#{node['ok']['install_path']}/ok") }
 end
 
 # Set up ColdFusion mapping
@@ -37,5 +61,5 @@ coldfusion902_config "extensions" do
   action :set
   property "mapping"
   args ({ "mapName" => "/ok",
-          "mapPath" => "#{node['caos']['ok']['install_path']}/ok"})
+          "mapPath" => "#{node['ok']['install_path']}/ok"})
 end
