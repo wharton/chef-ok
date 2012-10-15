@@ -57,7 +57,7 @@ execute "start_cf_for_ok_default_cf_config" do
   notifies :start, "service[coldfusion]", :immediately
 end
 
-coldfusion902_config "extensions" do
+coldfusion10_config "extensions" do
   action :set
   property "mapping"
   args ({ "mapName" => "/ok",
