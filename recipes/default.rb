@@ -24,9 +24,11 @@ package "unzip" do
   action :install
 end
 
+file_name = node['ok']['download']['url'].split('/').last
+
 # download ok
 
-remote_file "#{Chef::Config['file_cache_path']}/ok-0.1.zip" do
+remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
   source "#{node['ok']['download']['url']}"
   action :create_if_missing
   mode "0744"
@@ -43,7 +45,7 @@ script "install_ok" do
   user "root"
   cwd "#{Chef::Config['file_cache_path']}"
   code <<-EOH
-unzip ok-0.1.zip 
+unzip #{file_name} 
 mv ok #{node['ok']['install_path']}
 chown -R nobody:bin #{node['ok']['install_path']}/ok
 EOH
