@@ -26,6 +26,7 @@ end
 
 file_name = node['ok']['download']['url'].split('/').last
 
+
 # download ok
 
 remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
@@ -35,6 +36,16 @@ remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
   owner "root"
   group "root"
   not_if { File.directory?("#{node['ok']['install_path']}/ok") }
+end
+
+# Create Directory if missing
+
+directory "#{node['ok']['install_path']}" do
+ owner "vagrant"
+ group "vagrant"
+ mode "0755"
+ action :create
+ not_if { File.directory?("#{node['ok']['install_path']}") }
 end
 
 
