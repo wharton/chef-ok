@@ -2,7 +2,7 @@
 # Cookbook Name:: ok
 # Recipe:: default
 #
-# Copyright 2012, Courtney Wilburn
+# Copyright 2012, Courtney Wilburn, Nathan Mische
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #
 #
 
-#install unzip if needed
+# Install unzip if needed
 
 package "unzip" do
   action :install
@@ -27,7 +27,7 @@ end
 file_name = node['ok']['download']['url'].split('/').last
 
 
-# download ok
+# Download OK
 
 remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
   source "#{node['ok']['download']['url']}"
@@ -38,7 +38,7 @@ remote_file "#{Chef::Config['file_cache_path']}/#{file_name}" do
   not_if { File.directory?("#{node['ok']['install_path']}/ok") }
 end
 
-# Create Directory if missing
+# Create directory if missing
 
 directory "#{node['ok']['install_path']}" do
  owner "vagrant"
