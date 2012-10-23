@@ -9,6 +9,6 @@ version          "0.0.4"
   supports os
 end
 
-depends "coldfusion10"
+depends "coldfusion902"
 
 recipe "ok", "Installs OK and adds a ColdFusion mapping."
