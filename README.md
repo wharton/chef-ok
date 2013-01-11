@@ -15,7 +15,7 @@ Attributes
 ==========
 
 * `node['ok']['install_path']` (Default is /vagrant/frameworks)
-* `node[''ok']['download']['url']` (Default is https://github.com/downloads/nmische/cf-ok/ok-0.1.zip)
+* `node[''ok']['download']['url']` (Default is https://github.com/nmische/cf-ok/archive/0.1.0.zip)
 
 Usage
 =====
