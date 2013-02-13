@@ -41,8 +41,8 @@ end
 # Create directory if missing
 
 directory "#{node['ok']['install_path']}" do
- owner "vagrant"
- group "vagrant"
+ owner "root"
+ group "root"
  mode "0755"
  action :create
  not_if { File.directory?("#{node['ok']['install_path']}") }
