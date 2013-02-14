@@ -26,6 +26,7 @@ end
 
 file_name = node['ok']['download']['url'].split('/').last
 
+node.set['ok']['owner'] = node['cf10']['installer']['runtimeuser'] if node['ok']['owner'] == nil
 
 # Download OK
 
@@ -41,9 +42,10 @@ end
 # Create directory if missing
 
 directory "#{node['ok']['install_path']}" do
- owner "root"
- group "root"
+ owner node['ok']['owner']
+ group node['ok']['group']
  mode "0755"
+ recursive true
  action :create
  not_if { File.directory?("#{node['ok']['install_path']}") }
 end
@@ -58,7 +60,7 @@ script "install_ok" do
   code <<-EOH
 unzip #{file_name} 
 mv cf-ok-0.1.0/ #{node['ok']['install_path']}/ok
-chown -R #{node['cf10']['installer']['runtimeuser']} #{node['ok']['install_path']}/ok
+chown -R #{node['ok']['owner']}:#{node['ok']['group']} #{node['ok']['install_path']}/ok
 EOH
   not_if { File.directory?("#{node['ok']['install_path']}/ok") }
 end
