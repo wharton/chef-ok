@@ -26,7 +26,7 @@ end
 
 file_name = node['ok']['download']['url'].split('/').last
 
-node.set['ok']['owner'] = node['cf10']['installer']['runtimeuser'] if node['ok']['owner'] == nil
+node.set['ok']['owner'] = "nobody" if node['ok']['owner'] == nil
 
 # Download OK
 
