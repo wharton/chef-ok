@@ -15,6 +15,8 @@ Attributes
 ==========
 
 * `node['ok']['install_path']` (Default is /vagrant/frameworks)
+* `node['ok']['owner']` (Default is `nil` which will result in owner being set to `node['cf10']['installer']['runtimeuser']`)
+* `node['ok']['group']` (Default is bin)
 * `node[''ok']['download']['url']` (Default is https://github.com/nmische/cf-ok/archive/0.1.0.zip)
 
 Usage
