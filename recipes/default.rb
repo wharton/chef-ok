@@ -59,7 +59,7 @@ script "install_ok" do
   cwd "#{Chef::Config['file_cache_path']}"
   code <<-EOH
 unzip #{file_name} 
-mv cf-ok-0.1.0/ #{node['ok']['install_path']}/ok
+mv cf-ok-#{node['ok']['version']}/ #{node['ok']['install_path']}/ok
 chown -R #{node['ok']['owner']}:#{node['ok']['group']} #{node['ok']['install_path']}/ok
 EOH
   not_if { File.directory?("#{node['ok']['install_path']}/ok") }
